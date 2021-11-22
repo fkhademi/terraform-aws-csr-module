@@ -1,5 +1,5 @@
 resource "aws_security_group" "csr_mgmt_sg" {
-  name        = "csr_mgmt"
+  name        = "${var.name}_csr_mgmt"
   description = "Security group for Mgmt CSR ENI"
   vpc_id      = var.vpc_id
 
@@ -9,7 +9,7 @@ resource "aws_security_group" "csr_mgmt_sg" {
 }
 
 resource "aws_security_group" "csr_public_sg" {
-  name        = "csr_public"
+  name        = "${var.name}_csr_public"
   description = "Security group for public CSR ENI"
   vpc_id      = var.vpc_id
 
@@ -19,7 +19,7 @@ resource "aws_security_group" "csr_public_sg" {
 }
 
 resource "aws_security_group" "csr_private_sg" {
-  name        = "csr_private"
+  name        = "${var.name}_csr_lan"
   description = "Security group for private CSR ENI"
   vpc_id      = var.vpc_id
 
