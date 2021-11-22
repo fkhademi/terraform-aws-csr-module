@@ -24,7 +24,7 @@ resource "aws_security_group" "csr_private_sg" {
   vpc_id      = var.vpc_id
 
   tags = {
-    "Name" = "${var.name} Private SG"
+    "Name" = "${var.name} LAN SG"
   }
 }
 
