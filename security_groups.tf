@@ -55,16 +55,6 @@ resource "aws_security_group_rule" "csr_public_ssh" {
   security_group_id = aws_security_group.csr_public_sg.id
 }
 
-resource "aws_security_group_rule" "client_forward_ssh" {
-  count             = var.create_client ? 1 : 0
-  type              = "ingress"
-  from_port         = 2222
-  to_port           = 2222
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.csr_public_sg.id
-}
-
 resource "aws_security_group_rule" "csr_public_dhcp" {
   type              = "ingress"
   from_port         = 67
