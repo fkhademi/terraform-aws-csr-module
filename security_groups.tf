@@ -30,8 +30,8 @@ resource "aws_security_group" "csr_private_sg" {
 
 resource "aws_security_group_rule" "csr_mgmt_ingress" {
   type              = "ingress"
-  from_port         = 0
-  to_port           = 0
+  from_port         = 22
+  to_port           = 22
   protocol          = -1
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.csr_mgmt_sg.id
@@ -51,33 +51,6 @@ resource "aws_security_group_rule" "csr_public_ssh" {
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.csr_public_sg.id
-}
-
-resource "aws_security_group_rule" "csr_public_dhcp" {
-  type              = "ingress"
-  from_port         = 67
-  to_port           = 67
-  protocol          = "udp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.csr_public_sg.id
-}
-
-resource "aws_security_group_rule" "csr_public_ntp" {
-  type              = "ingress"
-  from_port         = 123
-  to_port           = 123
-  protocol          = "udp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.csr_public_sg.id
-}
-
-resource "aws_security_group_rule" "csr_public_snmp" {
-  type              = "ingress"
-  from_port         = 161
-  to_port           = 161
-  protocol          = "udp"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.csr_public_sg.id
 }
