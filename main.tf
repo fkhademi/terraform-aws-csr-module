@@ -46,12 +46,6 @@ resource "aws_eip" "pub" {
   }
 }
 
-resource "aws_key_pair" "csr_deploy_key" {
-  count      = var.key_name == null ? 1 : 0
-  key_name   = "${var.name}_sshkey"
-  public_key = tls_private_key.csr_deploy_key[0].public_key_openssh
-}
-
 data "aws_ami" "csr_aws_ami" {
   owners = ["aws-marketplace"]
 
@@ -70,10 +64,15 @@ data "aws_instance" "csr" {
   depends_on = [aws_instance.csr]
 }
 
+resource "aws_key_pair" "key" {
+  key_name   = "${var.name}-key"
+  public_key = var.ssh_key
+}
+
 resource "aws_instance" "csr" {
   ami           = data.aws_ami.csr_aws_ami.id
   instance_type = var.instance_type
-  key_name      = var.key_name == null ? "${var.name}_sshkey" : var.key_name
+  key_name      = aws_key_pair.key.key_name
 
   network_interface {
     network_interface_id = aws_network_interface.mgmt.id
