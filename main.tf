@@ -1,6 +1,6 @@
 resource "aws_network_interface" "mgmt" {
   subnet_id         = var.mgmt_subnet_id
-  security_groups   = [aws_security_group.csr_public_sg.id]
+  security_groups   = [aws_security_group.public.id]
   source_dest_check = false
 
   tags = {
@@ -10,7 +10,7 @@ resource "aws_network_interface" "mgmt" {
 
 resource "aws_network_interface" "lan" {
   subnet_id         = var.lan_subnet_id
-  security_groups   = [aws_security_group.csr_private_sg.id]
+  security_groups   = [aws_security_group.private.id]
   source_dest_check = false
 
   tags = {
