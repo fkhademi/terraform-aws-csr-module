@@ -65,16 +65,7 @@ resource "aws_instance" "csr" {
     device_index         = 1
   }
 
-  /*   user_data = templatefile("${path.module}/csr_aws.sh", {
-    public_conns   = aviatrix_transit_external_device_conn.pubConns
-    private_conns  = aviatrix_transit_external_device_conn.privConns
-    pub_conn_keys  = keys(aviatrix_transit_external_device_conn.pubConns)
-    priv_conn_keys = keys(aviatrix_transit_external_device_conn.privConns)
-    gateway        = data.aviatrix_transit_gateway.avtx_gateways
-    hostname       = var.name
-    test_client_ip = var.create_client ? data.aws_network_interface.test_client_if[0].private_ip : ""
-    adv_prefixes   = var.advertised_prefixes
-  }) */
+  user_data_base64 = "${base64encode(var.user_data_base64)}"
 
   tags = {
     "Name" = var.name

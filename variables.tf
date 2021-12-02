@@ -26,3 +26,7 @@ variable "instance_type" {
 variable "ssh_key" {
   description = "Public SSH key for the instance"
 }
+
+variable "user_data_base64" {
+  description = "base64 encoded userdata"
+}
