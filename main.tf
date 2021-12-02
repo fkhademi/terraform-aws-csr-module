@@ -8,16 +8,6 @@ resource "aws_network_interface" "mgmt" {
   }
 }
 
-resource "aws_network_interface" "pub" {
-  subnet_id         = var.pub_subnet_id
-  security_groups   = [aws_security_group.csr_public_sg.id]
-  source_dest_check = false
-
-  tags = {
-    "Name" = "${var.name} Public Interface"
-  }
-}
-
 resource "aws_network_interface" "lan" {
   subnet_id         = var.lan_subnet_id
   security_groups   = [aws_security_group.csr_private_sg.id]
@@ -31,15 +21,6 @@ resource "aws_network_interface" "lan" {
 resource "aws_eip" "mgmt" {
   vpc               = true
   network_interface = aws_network_interface.mgmt.id
-
-  tags = {
-    "Name" = "${var.name} Public IP"
-  }
-}
-
-resource "aws_eip" "pub" {
-  vpc               = true
-  network_interface = aws_network_interface.pub.id
 
   tags = {
     "Name" = "${var.name} Public IP"
@@ -80,13 +61,8 @@ resource "aws_instance" "csr" {
   }
 
   network_interface {
-    network_interface_id = aws_network_interface.pub.id
-    device_index         = 1
-  }
-
-  network_interface {
     network_interface_id = aws_network_interface.lan.id
-    device_index         = 2
+    device_index         = 1
   }
 
   /*   user_data = templatefile("${path.module}/csr_aws.sh", {
