@@ -1,5 +1,5 @@
-resource "aws_network_interface" "mgmt" {
-  subnet_id         = var.mgmt_subnet_id
+resource "aws_network_interface" "pub" {
+  subnet_id         = var.pub_subnet_id
   security_groups   = [aws_security_group.public.id]
   source_dest_check = false
 
@@ -18,9 +18,9 @@ resource "aws_network_interface" "lan" {
   }
 }
 
-resource "aws_eip" "mgmt" {
+resource "aws_eip" "pub" {
   vpc               = true
-  network_interface = aws_network_interface.mgmt.id
+  network_interface = aws_network_interface.pub.id
 
   tags = {
     "Name" = "${var.name} Public IP"
@@ -56,7 +56,7 @@ resource "aws_instance" "csr" {
   key_name      = aws_key_pair.key.key_name
 
   network_interface {
-    network_interface_id = aws_network_interface.mgmt.id
+    network_interface_id = aws_network_interface.pub.id
     device_index         = 0
   }
 
