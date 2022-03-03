@@ -6,10 +6,6 @@ variable "vpc_id" {
   description = "VPC ID for the instance"
 }
 
-variable "mgmt_subnet_id" {
-  description = "AWS Subnet ID for the MGMT interface"
-}
-
 variable "pub_subnet_id" {
   description = "AWS Subnet ID for the PUBLIC interface"
 }
